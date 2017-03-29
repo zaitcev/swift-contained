@@ -1,0 +1,8 @@
+This is an experiment in running OpenStack Swift in containers,
+initially in Docker containers. The objective is to vastly simplify
+deployment of test clusters in comparison with e.g. traditional SAIO.
+No more lengthy, complex, and error-prone instructions. Just fetch
+the image and deploy it in 1 invocation of the docker command, done.
+
+saio/
+  One container with SAIO
