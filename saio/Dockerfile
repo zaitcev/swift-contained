@@ -1,12 +1,19 @@
-FROM centos
+FROM fedora
 
 # docker build -t saio-1 .
 # docker run -i -t --entrypoint bash saio-1
 # docker run -i -t -v /run/systemd/journal/dev-log:/dev/log -p 8080:8080 saio-1
 
-RUN yum install -y https://www.rdoproject.org/repos/rdo-release.rpm
-# RUN yum update -y
-RUN yum install -y openstack-swift-proxy openstack-swift-account openstack-swift-container openstack-swift-object memcached rsync
+RUN dnf install -y memcached rsync pyxattr sqlite git-core python-pip \
+ gcc redhat-rpm-config \
+ python-setuptools python-devel python-greenlet python2-paste-deploy \
+ python-netifaces python-dns \
+ python-pyeclib liberasurecode-devel
+
+RUN useradd -u 160 -U -d /var/lib/swift -s /bin/nologin swift
+
+RUN git clone https://github.com/openstack/swift.git
+RUN cd swift && pip install -r requirements.txt && python setup.py develop
 
 COPY swift.conf /etc/swift/
 COPY account-server.conf container-server.conf object-server.conf \

@@ -4,5 +4,7 @@ deployment of test clusters in comparison with e.g. traditional SAIO.
 No more lengthy, complex, and error-prone instructions. Just fetch
 the image and deploy it in 1 invocation of the docker command, done.
 
+Make sure that Docker volumes are on XFS.
+
 saio/
   One container with SAIO
