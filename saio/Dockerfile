@@ -4,8 +4,8 @@ FROM fedora
 # docker run -i -t --entrypoint bash saio-1
 # docker run -i -t -v /run/systemd/journal/dev-log:/dev/log -p 8080:8080 saio-1
 
-RUN dnf install -y memcached rsync pyxattr sqlite git-core python-pip \
- gcc redhat-rpm-config \
+RUN dnf install -y supervisor memcached rsync pyxattr sqlite git-core \
+ python-pip gcc redhat-rpm-config \
  python-setuptools python-devel python-greenlet python2-paste-deploy \
  python-netifaces python-dns \
  python-pyeclib liberasurecode-devel
@@ -23,7 +23,7 @@ COPY account-server.conf container-server.conf object-server.conf \
 
 COPY rsyncd.conf /etc/
 
-COPY run.sh /usr/local/bin/run.sh
+COPY supervisor.ini /etc/supervisord.d/swift.ini
 
 # Not used for operations - rebuilds from scratch, should we ever want it.
 COPY makerings.sh /root/makerings.sh
@@ -42,4 +42,4 @@ VOLUME /srv/node/s4
 
 EXPOSE 8080
 
-ENTRYPOINT ["/usr/local/bin/run.sh"]
+ENTRYPOINT ["/usr/bin/supervisord", "-n"]
