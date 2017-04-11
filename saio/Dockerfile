@@ -17,8 +17,7 @@ RUN cd swift && pip install -r requirements.txt && python setup.py develop
 
 COPY swift.conf /etc/swift/
 COPY account-server.conf container-server.conf object-server.conf \
- proxy-server.conf \
- container-reconciler.conf \
+ proxy-server.conf object-expirer.conf container-reconciler.conf \
    /etc/swift/
 
 COPY rsyncd.conf /etc/
