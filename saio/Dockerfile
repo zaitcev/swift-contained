@@ -40,6 +40,8 @@ VOLUME /srv/node/s2
 VOLUME /srv/node/s3
 VOLUME /srv/node/s4
 
+RUN mkdir -p /var/cache/swift && chown swift /var/cache/swift
+
 EXPOSE 8080
 
 ENTRYPOINT ["/usr/bin/supervisord", "-n"]
